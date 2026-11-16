@@ -1,93 +1,123 @@
 # Techlifai: Digital Studio
 
-A one-page, animated agency website built with React + Vite.
+The marketing website for [Techlifai](https://techlifai.com), an Islamabad based studio offering
+Web Development, WordPress, Webflow, Shopify, App Development, SEO and AI Automation.
 
-Services covered: Web Development, WordPress, Webflow Development, Shopify Development,
-App Development, SEO, and AI Automation.
+A multi-page React single-page app with animated page transitions, smooth scrolling and a
+dark/light theme.
 
-## Running this project in VS Code
+## Tech stack
 
-**Requirements:** [Node.js](https://nodejs.org) 18+ installed on your machine.
+- **React 18** + **Vite 5**
+- **React Router 7** for routing (pages are lazy-loaded)
+- **Tailwind CSS 4** (via `@tailwindcss/vite`) plus design tokens in `src/index.css`
+- **Framer Motion** for animation (`LazyMotion`, respects `prefers-reduced-motion`)
+- **Lenis** for smooth scrolling
+- **React Helmet Async** for per-page SEO tags
+- **EmailJS** for the contact form
 
-1. Unzip this folder and open it in VS Code (`File → Open Folder…`).
-2. Open a terminal in VS Code (`` Ctrl+` `` / `` Cmd+` ``).
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the dev server:
-   ```bash
-   npm run dev
-   ```
-5. Open the URL it prints (usually `http://localhost:5173`) in your browser. The page
-   hot-reloads as you edit files.
+## Getting started
 
-## Building for production / deploying
+**Requirements:** [Node.js](https://nodejs.org) 18+
 
 ```bash
-npm run build
+npm install
+npm run dev       # dev server, usually http://localhost:5173
+npm run build     # production build into dist/
+npm run preview   # preview the production build locally
 ```
 
-This outputs a static `dist/` folder you can deploy anywhere (Vercel, Netlify, GitHub Pages,
-your own hosting, etc.). Preview the production build locally with:
+## Routes
 
-```bash
-npm run preview
-```
+| Path | Page |
+| --- | --- |
+| `/` | Home |
+| `/about` | About |
+| `/services` | Services |
+| `/industries` | Industries |
+| `/projects` | Projects (category filter) |
+| `/blog`, `/blog/:slug` | Blog list and posts |
+| `/team` | Team |
+| `/reviews` | Reviews / testimonials |
+| `/contact` | Contact form |
+| `*` | Not found |
 
 ## Project structure
 
 ```
 techlifai/
-├─ index.html            # HTML entry point (loads fonts + src/main.jsx)
-├─ package.json
+├─ index.html              # Entry HTML: meta tags, Open Graph, JSON-LD
 ├─ vite.config.js
+├─ vercel.json             # SPA rewrite for Vercel
+├─ public/
+│  ├─ CNAME                # Custom domain (techlifai.com)
+│  ├─ _redirects           # SPA fallback for Netlify-style hosts
+│  ├─ robots.txt
+│  ├─ sitemap.xml
+│  └─ favicon.svg
 └─ src/
-   ├─ main.jsx            # React root
-   ├─ App.jsx             # Page layout + scroll-spy logic
-   ├─ index.css           # All styles, design tokens, animations
-   ├─ data.js             # Editable content: services, projects, team, testimonials
-   ├─ icons.jsx           # Inline SVG icon components
-   ├─ Reveal.jsx           # Scroll-reveal animation wrapper
-   └─ components/
-      ├─ Navbar.jsx        # Sticky nav with active-section highlighting
-      ├─ Hero.jsx
-      ├─ About.jsx
-      ├─ Services.jsx
-      ├─ Projects.jsx      # Includes the All / Web Dev / WordPress / etc. filter
-      ├─ Team.jsx
-      ├─ Testimonials.jsx
-      ├─ Contact.jsx       # Form (see note below)
-      └─ Footer.jsx
+   ├─ main.jsx             # React root
+   ├─ App.jsx              # Router and lazy-loaded routes
+   ├─ index.css            # Global styles, tokens, animations
+   ├─ data.js              # Editable content (see below)
+   ├─ icons.jsx            # Inline SVG icons
+   ├─ images/              # Project and section images
+   ├─ lib/
+   │  ├─ smoothScroll.js   # Lenis setup
+   │  └─ theme.js          # Dark/light theme hook
+   ├─ components/
+   │  ├─ Layout.jsx        # Header, mobile menu, footer, theme toggle
+   │  ├─ Site.jsx          # Shared site building blocks
+   │  └─ PageTransition.jsx
+   └─ pages/               # One file per route
+      ├─ Home, About, Services, Industries, Projects
+      ├─ Blog, BlogPost, Team, Reviews, NotFound
+      ├─ Contact.jsx       # Re-exports EmailContact.jsx
+      ├─ EmailContact.jsx  # Contact form (EmailJS)
+      └─ pageHelpers.jsx
 ```
 
 ## Editing content
 
-Almost everything text-based (services, project list, team members, testimonials, the
-contact email/phone) lives in **`src/data.js`**: edit that file first before touching any
-component.
+Most text content lives in **`src/data.js`**:
 
-Colors, fonts and spacing are defined as CSS variables at the top of **`src/index.css`**.
+- `CONTACT_EMAIL`, `CONTACT_PHONE`, `COMPANY_ADDRESS`, `SOCIAL_LINKS`
+- `NAV_ITEMS`
+- `SERVICES`, `INDUSTRIES`
+- `PROJECT_CATS`, `PROJECTS`
+- `TEAM`, `ROLE_CHIPS`, `TESTIMONIALS`
+- `BLOG_POSTS`
+- `EMAILJS` (service, template and public key for the contact form)
 
-## About the contact form
+Colors, fonts and spacing are defined as tokens in **`src/index.css`**. The theme is stored
+in `localStorage` and applied through `data-theme` on `<html>`.
 
-This is a static front end with no backend, so it can't silently send email on its own -
-browsers block that for security reasons. The form currently opens a pre-filled `mailto:`
-draft addressed to `itzsaadi.99@gmail.com` in the visitor's email app.
+## Contact form
 
-If you'd rather have it submit silently (no email client popup), connect it to a form
-service instead: two easy options:
+`src/pages/EmailContact.jsx` sends submissions directly from the browser with
+[EmailJS](https://www.emailjs.com), so no backend is needed. The IDs are configured in the
+`EMAILJS` object in `src/data.js`. The EmailJS public key is designed to be exposed in
+client code, but to rotate or change it, update that object and your EmailJS template.
 
-- **[Formspree](https://formspree.io)**: create a free form endpoint, then change the
-  `submit` function in `src/components/Contact.jsx` to `fetch()` POST to your Formspree URL.
-- **[EmailJS](https://www.emailjs.com)**: sends email directly from the browser using a
-  client-side SDK, no backend required.
+The template expects these variables: `name`, `email`, `service`, `budget`, `message`,
+`to_email`.
 
-## Notes
+## SEO
 
-- Navigation highlighting uses `IntersectionObserver`: no extra routing library needed,
-  since this is intentionally a smooth-scrolling one-page site.
-- The Projects section acts as an in-page project gallery with category filters
-  (All / Web Dev / WordPress / Webflow / Shopify / App Dev / SEO / AI) instead of a second
-  page, so the whole site keeps a single continuous scroll and nav experience.
-- Animations respect `prefers-reduced-motion`.
+- Per-page titles and descriptions via React Helmet
+- Open Graph tags and `ProfessionalService` JSON-LD (Islamabad) in `index.html`
+- `public/sitemap.xml` and `public/robots.txt`: update the sitemap when adding routes or
+  blog posts
+
+## Deployment
+
+The build output (`dist/`) is fully static.
+
+- **Vercel:** `vercel.json` rewrites all paths to `index.html` so client-side routes work on refresh.
+- **Netlify and similar:** `public/_redirects` provides the same fallback.
+- **Custom domain:** `public/CNAME` is set to `techlifai.com`.
+- `App.jsx` also supports being served under a `/techlifai` base path (for example, GitHub Pages
+  project hosting).
+
+Note: because the app is client-rendered, route-level SEO relies on crawlers executing
+JavaScript. Prerendering would improve this.
