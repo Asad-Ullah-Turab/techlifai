@@ -34,6 +34,8 @@ const getImage = (fileName) => IMAGE_ASSETS[`./images/${fileName}`];
 
 export const CONTACT_EMAIL = "techlifai@gmail.com";
 export const CONTACT_PHONE = "+49 175 9538961";
+export const WHATSAPP_URL =
+  "https://wa.me/491759538961?text=Hi%20Techlifai%2C%20I%27d%20like%20to%20discuss%20a%20project.";
 export const COMPANY_ADDRESS = "Islamabad, Pakistan";
 export const EMAILJS = {
   SERVICE_ID: "service_techlifai",
