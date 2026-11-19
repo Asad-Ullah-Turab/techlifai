@@ -173,6 +173,7 @@ export default function EmailContact() {
                     required
                     value={form.name}
                     onChange={update("name")}
+                    autoComplete="name"
                     placeholder="Your name"
                     className={INPUT_CLASSES}
                   />
@@ -184,6 +185,7 @@ export default function EmailContact() {
                     type="email"
                     value={form.email}
                     onChange={update("email")}
+                    autoComplete="email"
                     placeholder="you@company.com"
                     className={INPUT_CLASSES}
                   />
