@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
-import { CONTACT_EMAIL, SOCIAL_LINKS } from "../data.js";
+import { CONTACT_EMAIL, SOCIAL_LINKS, WHATSAPP_URL } from "../data.js";
 import { useTheme } from "../lib/theme.js";
 import {
   getLenis,
@@ -17,7 +17,7 @@ import {
 } from "../lib/smoothScroll.js";
 import { Button } from "./Site.jsx";
 import PageTransition from "./PageTransition.jsx";
-import { IconArrow } from "../icons.jsx";
+import { IconArrow, IconChat } from "../icons.jsx";
 
 const LINKS = [
   { label: "Work", to: "/projects" },
@@ -358,6 +358,20 @@ export function Footer() {
   );
 }
 
+function ChatButton() {
+  return (
+    <a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Chat with Techlifai on WhatsApp"
+      className="fixed right-5 bottom-5 z-40 grid h-12 w-12 place-items-center rounded-full bg-mint text-on-accent shadow-dropdown transition-transform duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+    >
+      <IconChat width="22" height="22" />
+    </a>
+  );
+}
+
 export function Layout({ children }) {
   const location = useLocation();
   const { pathname } = location;
@@ -383,6 +397,7 @@ export function Layout({ children }) {
         style={{ scaleX: progress }}
       />
       <Header />
+      <ChatButton />
       <AnimatePresence mode="wait" initial>
         <m.div key={pathname}>
           <ScrollManager />
