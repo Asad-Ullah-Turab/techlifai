@@ -284,7 +284,7 @@ function LocalTime() {
         new Intl.DateTimeFormat("en-GB", {
           hour: "2-digit",
           minute: "2-digit",
-          timeZone: "Asia/Karachi",
+          timeZone: "Europe/Berlin",
         }).format(new Date()),
       );
     tick();
@@ -294,7 +294,7 @@ function LocalTime() {
   return (
     <span className="mono-label inline-flex items-center gap-2 text-muted">
       <i className="pulse-dot h-1.5 w-1.5 rounded-full bg-mint" />
-      Islamabad {time}
+      Germany {time}
     </span>
   );
 }
