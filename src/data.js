@@ -511,3 +511,26 @@ export const BLOG_POSTS = [
     ],
   },
 ];
+
+export const FAQS = [
+  {
+    q: "How long does a typical project take?",
+    a: "A focused marketing site usually ships in two to four weeks. Larger web apps, stores and automation projects are scoped after a short discovery call.",
+  },
+  {
+    q: "How does pricing work?",
+    a: "We quote per project after understanding scope, with a fixed price and clear milestones. Monthly retainers are available for SEO and ongoing support.",
+  },
+  {
+    q: "Can you work with our existing website?",
+    a: "Yes. We regularly improve, migrate and extend existing WordPress, Shopify, Webflow and custom React sites without a full rebuild.",
+  },
+  {
+    q: "Do you offer support after launch?",
+    a: "Every project includes a support window after launch. After that you can move to a maintenance plan or manage the site yourself.",
+  },
+  {
+    q: "Which time zones do you work in?",
+    a: "We work with clients across Europe, the Middle East and North America, and overlap with your business hours for calls and reviews.",
+  },
+];
