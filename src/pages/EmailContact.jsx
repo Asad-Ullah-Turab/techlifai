@@ -44,6 +44,7 @@ export default function EmailContact() {
   });
   const [status, setStatus] = useState("");
   const [sending, setSending] = useState(false);
+  const [trap, setTrap] = useState("");
   const [serviceOpen, setServiceOpen] = useState(false);
   const serviceOptions = [
     ...SERVICES.map((service) => service.title),
@@ -55,6 +56,10 @@ export default function EmailContact() {
 
   const submit = async (event) => {
     event.preventDefault();
+    if (trap) {
+      setStatus("Thanks, your message has been sent successfully.");
+      return;
+    }
     setSending(true);
     setStatus("Sending your message...");
 
@@ -151,6 +156,16 @@ export default function EmailContact() {
               Send a message
             </h2>
             <form onSubmit={submit} className="grid gap-4">
+              <input
+                type="text"
+                name="website"
+                value={trap}
+                onChange={(event) => setTrap(event.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] h-0 w-0 opacity-0"
+              />
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="grid gap-1.5 mono-label text-muted">
                   Name
