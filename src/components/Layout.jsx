@@ -32,10 +32,10 @@ function ScrollManager() {
   const { hash } = useLocation();
   useEffect(() => {
     if (hash) {
-      const timer = setTimeout(
-        () => scrollToTarget(document.getElementById(hash.slice(1))),
-        120,
-      );
+      const timer = setTimeout(() => {
+        const target = document.getElementById(hash.slice(1));
+        if (target) scrollToTarget(target);
+      }, 120);
       return () => clearTimeout(timer);
     }
     scrollToTarget(0, { immediate: true });
