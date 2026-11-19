@@ -134,6 +134,13 @@ function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
+    if (!open) return;
+    const onKey = (event) => event.key === "Escape" && setOpen(false);
+    addEventListener("keydown", onKey);
+    return () => removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
     fn();
     addEventListener("scroll", fn, { passive: true });
