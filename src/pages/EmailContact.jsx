@@ -79,6 +79,10 @@ export default function EmailContact() {
       setStatus("Thanks, your message has been sent successfully.");
       return;
     }
+    if (!form.name.trim() || !form.message.trim()) {
+      setStatus("Please fill in your name and project details.");
+      return;
+    }
     setSending(true);
     setStatus("Sending your message...");
 
@@ -87,14 +91,14 @@ export default function EmailContact() {
         EMAILJS.SERVICE_ID,
         EMAILJS.TEMPLATE_ID,
         {
-          name: form.name,
-          email: form.email,
+          name: form.name.trim(),
+          email: form.email.trim(),
           service:
             form.service === "Other / custom service"
               ? form.customService
               : form.service,
           budget: form.budget,
-          message: form.message,
+          message: form.message.trim(),
           to_email: CONTACT_EMAIL,
         },
         { publicKey: EMAILJS.PUBLIC_KEY },
