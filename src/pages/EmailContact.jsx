@@ -293,7 +293,11 @@ export default function EmailContact() {
               </button>
 
               {status && (
-                <p className="mb-0 text-[0.85rem] text-mint" role="status">
+                <p
+                  className="mb-0 text-[0.85rem] text-mint"
+                  role="status"
+                  aria-live="polite"
+                >
                   {status}
                 </p>
               )}
