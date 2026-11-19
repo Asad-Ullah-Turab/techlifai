@@ -38,9 +38,9 @@ export const WHATSAPP_URL =
   "https://wa.me/491759538961?text=Hi%20Techlifai%2C%20I%27d%20like%20to%20discuss%20a%20project.";
 export const COMPANY_ADDRESS = "Islamabad, Pakistan";
 export const EMAILJS = {
-  SERVICE_ID: "service_techlifai",
-  TEMPLATE_ID: "template_6z4u9qd",
-  PUBLIC_KEY: "xPB2wRXh8nJMbvOBI",
+  SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_techlifai",
+  TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_6z4u9qd",
+  PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "xPB2wRXh8nJMbvOBI",
 };
 export const SOCIAL_LINKS = {
   LinkedIn: "https://www.linkedin.com/company/techlifai/",
