@@ -365,7 +365,7 @@ function ChatButton() {
       target="_blank"
       rel="noreferrer"
       aria-label="Chat with Techlifai on WhatsApp"
-      className="fixed right-5 bottom-5 z-40 grid h-12 w-12 place-items-center rounded-full bg-mint text-on-accent shadow-dropdown transition-transform duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+      className="fixed right-5 bottom-5 z-30 grid h-12 w-12 place-items-center rounded-full bg-mint text-on-accent shadow-dropdown transition-transform duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
     >
       <IconChat width="22" height="22" />
     </a>
