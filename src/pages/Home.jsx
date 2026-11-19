@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AnimatePresence, m } from "framer-motion";
 import { SERVICES, PROJECTS } from "../data.js";
 import { ArrowLink, Button, ImageReveal, Reveal, Section } from "../components/Site.jsx";
+import Faq from "../components/Faq.jsx";
 import { IconArrow } from "../icons.jsx";
 import { Meta } from "./pageHelpers.jsx";
 
@@ -298,6 +299,10 @@ export default function Home() {
             </footer>
           </blockquote>
         </Reveal>
+      </Section>
+
+      <Section eyebrow="FAQ" title="Good questions." className="pt-0">
+        <Faq />
       </Section>
     </>
   );

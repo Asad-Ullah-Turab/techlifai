@@ -148,3 +148,8 @@ export const IconTikTok = (p) => (
     <path d="M14 4c.5 2.4 2 3.8 4.5 4" />
   </Icon>
 );
+export const IconChat = (p) => (
+  <Icon {...p}>
+    <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z" />
+  </Icon>
+);

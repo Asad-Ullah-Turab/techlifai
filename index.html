@@ -18,6 +18,11 @@
     />
     <meta property="og:url" content="https://techlifai.com/" />
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Techlifai | Digital Studio" />
+    <meta
+      name="twitter:description"
+      content="Websites, apps, SEO and AI automation from Islamabad, Pakistan."
+    />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -32,19 +37,18 @@
         }
       }
     </script>
-    <meta name="theme-color" content="#0b0b0c" />
+    <meta name="theme-color" content="#f6f5f0" />
     <script>
       (function () {
+        var t = "light";
         try {
-          var t = localStorage.getItem("theme");
-          if (!t)
-            t = matchMedia("(prefers-color-scheme: light)").matches
-              ? "light"
-              : "dark";
-          document.documentElement.dataset.theme = t;
-        } catch (e) {
-          document.documentElement.dataset.theme = "dark";
-        }
+          t = localStorage.getItem("theme") || "light";
+        } catch (e) {}
+        document.documentElement.dataset.theme = t;
+        if (t === "dark")
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute("content", "#0b0b0c");
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />

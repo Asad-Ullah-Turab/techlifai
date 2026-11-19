@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-const read = () => document.documentElement.dataset.theme || "dark";
+const read = () => document.documentElement.dataset.theme || "light";
 
 export function useTheme() {
   const [theme, setTheme] = useState(read);

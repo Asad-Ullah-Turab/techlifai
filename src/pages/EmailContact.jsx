@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Helmet } from "react-helmet-async";
 import { Button, PageHeader, Section } from "../components/Site.jsx";
@@ -44,7 +44,27 @@ export default function EmailContact() {
   });
   const [status, setStatus] = useState("");
   const [sending, setSending] = useState(false);
+  const [trap, setTrap] = useState("");
   const [serviceOpen, setServiceOpen] = useState(false);
+  const serviceRef = useRef(null);
+
+  useEffect(() => {
+    if (!serviceOpen) return;
+    const close = (event) => {
+      if (event.key === "Escape") setServiceOpen(false);
+      else if (
+        event.type === "pointerdown" &&
+        !serviceRef.current?.contains(event.target)
+      )
+        setServiceOpen(false);
+    };
+    addEventListener("keydown", close);
+    addEventListener("pointerdown", close);
+    return () => {
+      removeEventListener("keydown", close);
+      removeEventListener("pointerdown", close);
+    };
+  }, [serviceOpen]);
   const serviceOptions = [
     ...SERVICES.map((service) => service.title),
     "Other / custom service",
@@ -55,6 +75,14 @@ export default function EmailContact() {
 
   const submit = async (event) => {
     event.preventDefault();
+    if (trap) {
+      setStatus("Thanks, your message has been sent successfully.");
+      return;
+    }
+    if (!form.name.trim() || !form.message.trim()) {
+      setStatus("Please fill in your name and project details.");
+      return;
+    }
     setSending(true);
     setStatus("Sending your message...");
 
@@ -63,14 +91,14 @@ export default function EmailContact() {
         EMAILJS.SERVICE_ID,
         EMAILJS.TEMPLATE_ID,
         {
-          name: form.name,
-          email: form.email,
+          name: form.name.trim(),
+          email: form.email.trim(),
           service:
             form.service === "Other / custom service"
               ? form.customService
               : form.service,
           budget: form.budget,
-          message: form.message,
+          message: form.message.trim(),
           to_email: CONTACT_EMAIL,
         },
         { publicKey: EMAILJS.PUBLIC_KEY },
@@ -151,6 +179,16 @@ export default function EmailContact() {
               Send a message
             </h2>
             <form onSubmit={submit} className="grid gap-4">
+              <input
+                type="text"
+                name="website"
+                value={trap}
+                onChange={(event) => setTrap(event.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] h-0 w-0 opacity-0"
+              />
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="grid gap-1.5 mono-label text-muted">
                   Name
@@ -158,6 +196,7 @@ export default function EmailContact() {
                     required
                     value={form.name}
                     onChange={update("name")}
+                    autoComplete="name"
                     placeholder="Your name"
                     className={INPUT_CLASSES}
                   />
@@ -169,6 +208,7 @@ export default function EmailContact() {
                     type="email"
                     value={form.email}
                     onChange={update("email")}
+                    autoComplete="email"
                     placeholder="you@company.com"
                     className={INPUT_CLASSES}
                   />
@@ -178,7 +218,7 @@ export default function EmailContact() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="grid gap-1.5 mono-label text-muted">
                   Service
-                  <div className="relative">
+                  <div className="relative" ref={serviceRef}>
                     <button
                       type="button"
                       className={`flex w-full items-center justify-between gap-3 rounded-lg border bg-paper px-3.5 py-3 text-left text-[0.95rem] font-normal normal-case tracking-normal text-ink transition ${
@@ -276,7 +316,11 @@ export default function EmailContact() {
               </button>
 
               {status && (
-                <p className="mb-0 text-[0.85rem] text-mint" role="status">
+                <p
+                  className="mb-0 text-[0.85rem] text-mint"
+                  role="status"
+                  aria-live="polite"
+                >
                   {status}
                 </p>
               )}

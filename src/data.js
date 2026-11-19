@@ -34,11 +34,13 @@ const getImage = (fileName) => IMAGE_ASSETS[`./images/${fileName}`];
 
 export const CONTACT_EMAIL = "techlifai@gmail.com";
 export const CONTACT_PHONE = "+49 175 9538961";
+export const WHATSAPP_URL =
+  "https://wa.me/491759538961?text=Hi%20Techlifai%2C%20I%27d%20like%20to%20discuss%20a%20project.";
 export const COMPANY_ADDRESS = "Islamabad, Pakistan";
 export const EMAILJS = {
-  SERVICE_ID: "service_techlifai",
-  TEMPLATE_ID: "template_6z4u9qd",
-  PUBLIC_KEY: "xPB2wRXh8nJMbvOBI",
+  SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_techlifai",
+  TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_6z4u9qd",
+  PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "xPB2wRXh8nJMbvOBI",
 };
 export const SOCIAL_LINKS = {
   LinkedIn: "https://www.linkedin.com/company/techlifai/",
@@ -507,5 +509,28 @@ export const BLOG_POSTS = [
       "The right choice usually depends on the complexity of the product and how much control your team needs over the frontend experience. If the site is mainly content and marketing-focused, Webflow can be a strong fit.",
       "If your team needs advanced interactions, custom APIs or a unique user experience, a React-based build gives more freedom. In many cases, the best result comes from combining the strengths of both approaches.",
     ],
+  },
+];
+
+export const FAQS = [
+  {
+    q: "How long does a typical project take?",
+    a: "A focused marketing site usually ships in two to four weeks. Larger web apps, stores and automation projects are scoped after a short discovery call.",
+  },
+  {
+    q: "How does pricing work?",
+    a: "We quote per project after understanding scope, with a fixed price and clear milestones. Monthly retainers are available for SEO and ongoing support.",
+  },
+  {
+    q: "Can you work with our existing website?",
+    a: "Yes. We regularly improve, migrate and extend existing WordPress, Shopify, Webflow and custom React sites without a full rebuild.",
+  },
+  {
+    q: "Do you offer support after launch?",
+    a: "Every project includes a support window after launch. After that you can move to a maintenance plan or manage the site yourself.",
+  },
+  {
+    q: "Which time zones do you work in?",
+    a: "We work with clients across Europe, the Middle East and North America, and overlap with your business hours for calls and reviews.",
   },
 ];

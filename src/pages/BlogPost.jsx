@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { BLOG_POSTS } from "../data.js";
 import { PageHeader } from "../components/Site.jsx";
 import { Meta } from "./pageHelpers.jsx";
@@ -18,6 +19,21 @@ export default function BlogPost() {
   return (
     <>
       <Meta title={post.title} description={post.excerpt} />
+      <Helmet>
+        <link rel="canonical" href={`https://techlifai.com/blog/${post.slug}`} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.excerpt,
+            image: post.image,
+            keywords: post.keywords.join(", "),
+            author: { "@type": "Organization", name: "Techlifai" },
+            publisher: { "@type": "Organization", name: "Techlifai" },
+          })}
+        </script>
+      </Helmet>
       <article className="pt-36 pb-20 md:pt-48 md:pb-28">
         <div className="container-site">
           <div className="max-w-[760px]">

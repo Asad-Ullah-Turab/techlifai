@@ -66,7 +66,8 @@ techlifai/
    │  ├─ smoothScroll.js   # Lenis setup
    │  └─ theme.js          # Dark/light theme hook
    ├─ components/
-   │  ├─ Layout.jsx        # Header, mobile menu, footer, theme toggle
+   │  ├─ Layout.jsx        # Header, mobile menu, footer, theme toggle, WhatsApp button
+   │  ├─ Faq.jsx           # FAQ accordion with FAQPage schema
    │  ├─ Site.jsx          # Shared site building blocks
    │  └─ PageTransition.jsx
    └─ pages/               # One file per route
@@ -87,6 +88,8 @@ Most text content lives in **`src/data.js`**:
 - `PROJECT_CATS`, `PROJECTS`
 - `TEAM`, `ROLE_CHIPS`, `TESTIMONIALS`
 - `BLOG_POSTS`
+- `FAQS`
+- `WHATSAPP_URL`
 - `EMAILJS` (service, template and public key for the contact form)
 
 Colors, fonts and spacing are defined as tokens in **`src/index.css`**. The theme is stored
@@ -96,8 +99,11 @@ in `localStorage` and applied through `data-theme` on `<html>`.
 
 `src/pages/EmailContact.jsx` sends submissions directly from the browser with
 [EmailJS](https://www.emailjs.com), so no backend is needed. The IDs are configured in the
-`EMAILJS` object in `src/data.js`. The EmailJS public key is designed to be exposed in
-client code, but to rotate or change it, update that object and your EmailJS template.
+`EMAILJS` object in `src/data.js`. Each value can be overridden with an env var (see
+`.env.example`): `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` and
+`VITE_EMAILJS_PUBLIC_KEY`. The EmailJS public key is designed to be exposed in client code.
+
+The form includes a hidden honeypot field to filter out simple spam bots.
 
 The template expects these variables: `name`, `email`, `service`, `budget`, `message`,
 `to_email`.
@@ -106,6 +112,8 @@ The template expects these variables: `name`, `email`, `service`, `budget`, `mes
 
 - Per-page titles and descriptions via React Helmet
 - Open Graph tags and `ProfessionalService` JSON-LD (Islamabad) in `index.html`
+- `FAQPage` schema on the home page and `BlogPosting` schema on each blog post
+- The 404 page is marked `noindex`
 - `public/sitemap.xml` and `public/robots.txt`: update the sitemap when adding routes or
   blog posts
 
@@ -113,7 +121,7 @@ The template expects these variables: `name`, `email`, `service`, `budget`, `mes
 
 The build output (`dist/`) is fully static.
 
-- **Vercel:** `vercel.json` rewrites all paths to `index.html` so client-side routes work on refresh.
+- **Vercel:** `vercel.json` rewrites all paths to `index.html` so client-side routes work on refresh, and caches hashed assets for a year.
 - **Netlify and similar:** `public/_redirects` provides the same fallback.
 - **Custom domain:** `public/CNAME` is set to `techlifai.com`.
 - `App.jsx` also supports being served under a `/techlifai` base path (for example, GitHub Pages
